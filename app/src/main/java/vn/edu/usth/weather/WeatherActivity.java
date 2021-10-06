@@ -1,7 +1,6 @@
 package vn.edu.usth.weather;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
@@ -12,9 +11,14 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        ForecastFragment firstFragment = new ForecastFragment();
-        // Add the fragment to the 'container' FrameLayout
-        getSupportFragmentManager().beginTransaction().add(R.id.container, firstFragment).commit();
+//        getSupportFragmentManager().beginTransaction().
+//                replace(R.id.fragmentAbove, new WeatherFragment(), "SOMETAG").
+//                commit();
+//        getSupportFragmentManager().beginTransaction().
+//                replace(R.id.fragmentBelow, new ForecastFragment(), "SOMETAG").
+//                commit();
+        
+        getSupportActionBar().setTitle(R.string.app_name);
 
     }
 }
