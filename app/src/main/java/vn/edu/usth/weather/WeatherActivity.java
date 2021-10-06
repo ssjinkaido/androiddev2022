@@ -1,6 +1,4 @@
 package vn.edu.usth.weather;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
