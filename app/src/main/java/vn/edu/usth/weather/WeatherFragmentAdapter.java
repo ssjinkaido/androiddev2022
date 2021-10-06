@@ -17,11 +17,20 @@ public class WeatherFragmentAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return null;
+        switch (position) {
+            case 0:
+                return new WeatherAndForecastFragment();
+            case 1:
+                return new WeatherAndForecastFragment();
+            case 2:
+                return new WeatherAndForecastFragment();
+
+        }
+        return new WeatherAndForecastFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 3;
     }
 }
