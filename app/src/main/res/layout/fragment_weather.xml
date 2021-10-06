@@ -7,33 +7,40 @@
     android:background="@color/purple_200"
     tools:context=".WeatherFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Sunny"
-        android:layout_alignParentLeft="true"
-        android:textSize="12pt"
-        android:id="@+id/first_text"
-        android:layout_alignParentStart="true"
-        android:paddingTop="12pt"
-        android:paddingLeft="12pt"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/frame" />
 
     <TextView
+        android:id="@+id/first_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hanoi"
-        android:layout_alignParentRight="true"
-        android:textSize="12pt"
-        android:id="@+id/second_text"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="12pt"
         android:paddingTop="12pt"
-        android:paddingRight="16pt"/>
+        android:text="@string/Sunny"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/second_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:paddingTop="12pt"
+        android:paddingRight="25pt"
+        android:text="Hanoi"
+        android:textSize="12pt" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/sun"
-        android:layout_below="@+id/first_text"/>
+        android:layout_below="@+id/first_text"
+        android:src="@drawable/sun" />
 
 
 </RelativeLayout>
