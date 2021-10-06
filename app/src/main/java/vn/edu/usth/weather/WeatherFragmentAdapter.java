@@ -1,4 +1,5 @@
 package vn.edu.usth.weather;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -21,9 +22,10 @@ public class WeatherFragmentAdapter extends FragmentStateAdapter {
                 return new WeatherAndForecastFragment();
             case 2:
                 return new WeatherAndForecastFragment();
-
+            default:
+                return new WeatherAndForecastFragment();
         }
-        return new WeatherAndForecastFragment();
+
     }
 
     @Override

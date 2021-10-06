@@ -35,7 +35,6 @@ public class WeatherActivity extends AppCompatActivity {
             }
         }).attach();
 
-        getSupportActionBar().setTitle(R.string.app_name);
 
     }
 }
