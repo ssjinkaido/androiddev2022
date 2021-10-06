@@ -2,6 +2,7 @@ package vn.edu.usth.weather;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
@@ -34,6 +35,9 @@ public class WeatherActivity extends AppCompatActivity {
                     break;
             }
         }).attach();
+
+        MediaPlayer mp = MediaPlayer.create(getBaseContext(), R.raw.lofistudy);
+        mp.start();
 
 
     }
