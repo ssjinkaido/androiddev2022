@@ -39,8 +39,8 @@ public class ForecastFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_forecast, container, false);
         rootView.setBackgroundColor(Color.parseColor("#20FF0000"));
-        TextView text = rootView.findViewById(R.id.day);
-        text.setText(day);
+
         return rootView;
+
     }
 }
