@@ -24,6 +24,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
+
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -77,7 +83,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                new task().execute(downloadUrl);
+//                new task().execute(downloadUrl);
 //                // https://alvinalexander.com/source-code/android-how-send-message-from-thread-to-handler/
 //                Handler handler = new Handler(Looper.getMainLooper()) {
 //                    @Override
@@ -108,8 +114,38 @@ public class WeatherActivity extends AppCompatActivity {
 //                });
 //                thread.start();
 ////                recreate();
+                //https://android--examples.blogspot.com/2017/02/android-volley-image-request-example.html
+                // Initialize a new RequestQueue instance
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-                
+                // Initialize a new ImageRequest
+                ImageRequest imageRequest = new ImageRequest(
+                        downloadUrl, // Image URL
+                        new Response.Listener<Bitmap>() { // Bitmap listener
+                            @Override
+                            public void onResponse(Bitmap response) {
+                                // Do something with response
+                                imageLogo = (ImageView) findViewById(R.id.logo);
+                                imageLogo.setImageBitmap(response);
+                            }
+                        },
+                        0, // Image width
+                        0, // Image height
+                        ImageView.ScaleType.CENTER_CROP, // Image scale type
+                        Bitmap.Config.RGB_565, //Image decode configuration
+                        new Response.ErrorListener() { // Error listener
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // Do something with error response
+                                error.printStackTrace();
+                                Toast.makeText(WeatherActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
+
+                // Add ImageRequest to the RequestQueue
+                requestQueue.add(imageRequest);
+
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(WeatherActivity.this, PrefActivity.class);
@@ -119,52 +155,52 @@ public class WeatherActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    //https://www.youtube.com/watch?v=6FMqgAzKuOg
-    private class task extends AsyncTask<String, Void, Bitmap> {
-        HttpURLConnection connection;
-        Bitmap temp;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(WeatherActivity.this, "Start", Toast.LENGTH_SHORT).show();
-
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... param) {
-            try {
-                URL url = new URL(param[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                temp = BitmapFactory.decodeStream(inputStream);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                connection.disconnect();
-            }
-            return temp;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            if (result != null) {
-                Toast.makeText(WeatherActivity.this, "Download successful", Toast.LENGTH_SHORT).show();
-                imageLogo = (ImageView) findViewById(R.id.logo);
-                imageLogo.setImageBitmap(result);
-
-            } else {
-                Toast.makeText(WeatherActivity.this, "Download failed", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-
-    }
+//
+//    //https://www.youtube.com/watch?v=6FMqgAzKuOg
+//    private class task extends AsyncTask<String, Void, Bitmap> {
+//        HttpURLConnection connection;
+//        Bitmap temp;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            Toast.makeText(WeatherActivity.this, "Start", Toast.LENGTH_SHORT).show();
+//
+//        }
+//
+//        @Override
+//        protected Bitmap doInBackground(String... param) {
+//            try {
+//                URL url = new URL(param[0]);
+//                connection = (HttpURLConnection) url.openConnection();
+//                connection.setRequestMethod("GET");
+//                connection.setDoInput(true);
+//                connection.connect();
+//                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
+//                temp = BitmapFactory.decodeStream(inputStream);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } finally {
+//                connection.disconnect();
+//            }
+//            return temp;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Bitmap result) {
+//            if (result != null) {
+//                Toast.makeText(WeatherActivity.this, "Download successful", Toast.LENGTH_SHORT).show();
+//                imageLogo = (ImageView) findViewById(R.id.logo);
+//                imageLogo.setImageBitmap(result);
+//
+//            } else {
+//                Toast.makeText(WeatherActivity.this, "Download failed", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//
+//
+//    }
 }
