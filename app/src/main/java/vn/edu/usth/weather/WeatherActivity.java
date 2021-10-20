@@ -6,6 +6,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager;
     private WeatherFragmentAdapter mWeatherFragmentAdapter;
+    private static final String MSG_KEY = "yo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,36 @@ public class WeatherActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                Toast.makeText(getApplicationContext(), "Refreshing...", Toast.LENGTH_SHORT).show();
-                recreate();
+                // https://alvinalexander.com/source-code/android-how-send-message-from-thread-to-handler/
+                Handler handler = new Handler(Looper.getMainLooper()) {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        // This method is executed in main thread
+                        Bundle bundle = msg.getData();
+                        String string = bundle.getString(MSG_KEY);
+                        Toast.makeText(WeatherActivity.this, string, Toast.LENGTH_SHORT).show();
+                    }
+                };
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            // wait for 2 seconds to simulate a long network access
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Bundle bundle = new Bundle();
+                        bundle.putString(MSG_KEY, "something sent from the server");
+                        // notify main thread
+                        Message msg = new Message();
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }
+                });
+                thread.start();
+//                recreate();
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(WeatherActivity.this, PrefActivity.class);
