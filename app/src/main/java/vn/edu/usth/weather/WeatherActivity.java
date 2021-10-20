@@ -5,6 +5,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -61,38 +62,40 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                // https://alvinalexander.com/source-code/android-how-send-message-from-thread-to-handler/
-                Handler handler = new Handler(Looper.getMainLooper()) {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        // This method is executed in main thread
-                        Bundle bundle = msg.getData();
-                        String string = bundle.getString(MSG_KEY);
-                        Toast.makeText(WeatherActivity.this, string, Toast.LENGTH_SHORT).show();
-                    }
-                };
-
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            // wait for 2 seconds to simulate a long network access
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Bundle bundle = new Bundle();
-                        bundle.putString(MSG_KEY, "something sent from the server");
-                        // notify main thread
-                        Message msg = new Message();
-                        msg.setData(bundle);
-                        handler.sendMessage(msg);
-                    }
-                });
-                thread.start();
-//                recreate();
+                new task().execute();
+//                // https://alvinalexander.com/source-code/android-how-send-message-from-thread-to-handler/
+//                Handler handler = new Handler(Looper.getMainLooper()) {
+//                    @Override
+//                    public void handleMessage(Message msg) {
+//                        // This method is executed in main thread
+//                        Bundle bundle = msg.getData();
+//                        String string = bundle.getString(MSG_KEY);
+//                        Toast.makeText(WeatherActivity.this, string, Toast.LENGTH_SHORT).show();
+//                    }
+//                };
+//
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            // wait for 2 seconds to simulate a long network access
+//                            Thread.sleep(2000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString(MSG_KEY, "something sent from the server");
+//                        // notify main thread
+//                        Message msg = new Message();
+//                        msg.setData(bundle);
+//                        handler.sendMessage(msg);
+//                    }
+//                });
+//                thread.start();
+////                recreate();
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(WeatherActivity.this, PrefActivity.class);
@@ -100,6 +103,32 @@ public class WeatherActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //https://viblo.asia/p/xu-ly-da-tien-trinh-trong-android-bang-asynctask-ZDEeLRMpvJb
+    private class task extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(WeatherActivity.this, "Start", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(WeatherActivity.this, "something sent from the server", Toast.LENGTH_SHORT).show();
         }
     }
 }
