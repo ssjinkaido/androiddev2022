@@ -1,37 +1,31 @@
 package vn.edu.usth.weather;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+
 import com.android.volley.toolbox.Volley;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
 
 public class WeatherActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
@@ -53,13 +47,13 @@ public class WeatherActivity extends AppCompatActivity {
         new TabLayoutMediator(mTabLayout, mViewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Home");
+                    tab.setText("Hanoi");
                     break;
                 case 1:
-                    tab.setText("Page1");
+                    tab.setText("Hanoi");
                     break;
                 case 2:
-                    tab.setText("Page2");
+                    tab.setText("Hanoi");
                     break;
             }
         }).attach();
@@ -83,37 +77,6 @@ public class WeatherActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_refresh:
-//                new task().execute(downloadUrl);
-//                // https://alvinalexander.com/source-code/android-how-send-message-from-thread-to-handler/
-//                Handler handler = new Handler(Looper.getMainLooper()) {
-//                    @Override
-//                    public void handleMessage(Message msg) {
-//                        // This method is executed in main thread
-//                        Bundle bundle = msg.getData();
-//                        String string = bundle.getString(MSG_KEY);
-//                        Toast.makeText(WeatherActivity.this, string, Toast.LENGTH_SHORT).show();
-//                    }
-//                };
-//
-//                Thread thread = new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            // wait for 2 seconds to simulate a long network access
-//                            Thread.sleep(2000);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString(MSG_KEY, "something sent from the server");
-//                        // notify main thread
-//                        Message msg = new Message();
-//                        msg.setData(bundle);
-//                        handler.sendMessage(msg);
-//                    }
-//                });
-//                thread.start();
-////                recreate();
                 //https://android--examples.blogspot.com/2017/02/android-volley-image-request-example.html
                 // Initialize a new RequestQueue instance
                 RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -155,52 +118,7 @@ public class WeatherActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-//
-//    //https://www.youtube.com/watch?v=6FMqgAzKuOg
-//    private class task extends AsyncTask<String, Void, Bitmap> {
-//        HttpURLConnection connection;
-//        Bitmap temp;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            Toast.makeText(WeatherActivity.this, "Start", Toast.LENGTH_SHORT).show();
-//
-//        }
-//
-//        @Override
-//        protected Bitmap doInBackground(String... param) {
-//            try {
-//                URL url = new URL(param[0]);
-//                connection = (HttpURLConnection) url.openConnection();
-//                connection.setRequestMethod("GET");
-//                connection.setDoInput(true);
-//                connection.connect();
-//                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-//                temp = BitmapFactory.decodeStream(inputStream);
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } finally {
-//                connection.disconnect();
-//            }
-//            return temp;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Bitmap result) {
-//            if (result != null) {
-//                Toast.makeText(WeatherActivity.this, "Download successful", Toast.LENGTH_SHORT).show();
-//                imageLogo = (ImageView) findViewById(R.id.logo);
-//                imageLogo.setImageBitmap(result);
-//
-//            } else {
-//                Toast.makeText(WeatherActivity.this, "Download failed", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
-//
-//
-//    }
+
+
+
 }
